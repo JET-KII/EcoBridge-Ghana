@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Flask / local environment
+.env
+.env.*
+!.env.example
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# User uploads and runtime media
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# Private/client media. Keep out unless explicitly approved for public GitHub.
+app/static/team/*
+!app/static/team/.gitkeep
+app/static/campaign/*
+!app/static/campaign/.gitkeep
+
+# Deployment archives and generated packages
+*.zip
+ecobridge-deploy*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Local generated work
+tmp/
+tools/
+Sample_logos/
+*.mp4
+*.wav
+*.mp3
+*.mov
+*.avi
+*.webm
+*.mkv
+
+# Remotion / Node workspaces used during video experiments
+EcoBridge_Ghana_Video/
+EcobridgeGhana_Video/
+node_modules/
+package-lock.json
+dist/
+build/
+
+# Documents and presentation exports generated during client work
+*.pptx
+*.docx
+*.pdf
+requirements-video.txt
+requirements-cpanel.txt
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

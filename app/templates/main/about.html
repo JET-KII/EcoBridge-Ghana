@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">About EcoBridge Ghana</span>
+        <h1 class="section-title mt-3">{{ about_foundation.header_title }}</h1>
+        <p class="section-copy">{{ about_foundation.header_copy }}</p>
+    </div>
+</section>
+
+<section class="py-5 about-story-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="content-panel about-panel-brand h-100">
+                    <span class="panel-kicker">Mission and vision</span>
+                    <h2>Mission</h2>
+                    <p>{{ about_foundation.mission }}</p>
+                    <h2 class="mt-5">Vision</h2>
+                    <p>{{ about_foundation.vision }}</p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="content-panel about-panel-values h-100">
+                    <span class="panel-kicker panel-kicker-dark">Core values</span>
+                    <h2>Core values</h2>
+                    <ul class="contact-list mt-4">
+                        {% for value in about_foundation.core_values %}
+                            <li><strong>{{ value.title }}:</strong> {{ value.body }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 about-team-section" data-showcase-root>
+    <div class="container">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-5">
+                <div class="content-panel about-team-copy-panel h-100">
+                    <span class="panel-kicker panel-kicker-dark">{{ about_team.section_kicker }}</span>
+                    <h2>{{ about_team.section_title }}</h2>
+                    <p class="mt-4 mb-0">{{ about_team.section_intro }}</p>
+                    <div class="story-showcase-detail-panel mt-4" aria-live="polite">
+                        <span class="story-showcase-step" data-showcase-story-step>{{ about_team.slides[0].step_label }}</span>
+                        <h3 class="story-showcase-detail-title mt-3" data-showcase-story-headline>{{ about_team.slides[0].headline }}</h3>
+                        <p class="story-showcase-detail-copy mt-3 mb-0" data-showcase-story-body>{{ about_team.slides[0].body }}</p>
+                    </div>
+                    <div class="about-team-support-grid mt-4">
+                        {% for point in about_team.support_points %}
+                            <div class="about-team-support-pill">{{ point }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="story-showcase-shell about-team-slider-shell h-100" data-showcase-slider data-autoplay="5400" data-showcase-entered="false">
+                    <div class="story-showcase-stage about-team-showcase-stage" tabindex="0" aria-label="EcoBridge Ghana team showcase">
+                        {% for item in about_team.slides %}
+                            <article
+                                class="story-showcase-slide"
+                                data-showcase-slide
+                                data-step-label="{{ item.step_label }}"
+                                data-headline="{{ item.headline }}"
+                                data-body="{{ item.body }}"
+                                style="--slide-order: {{ loop.index0 }};"
+                                aria-hidden="{{ 'false' if loop.first else 'true' }}"
+                            >
+                                <img
+                                    src="{{ url_for('static', filename=item.image_path) }}"
+                                    alt="{{ item.alt }}"
+                                    class="story-showcase-image"
+                                    style="--story-image-position: {{ item.image_position or '50% 50%' }}; --story-image-scale: {{ item.image_scale or '1.06' }};"
+                                >
+                                <button
+                                    class="about-team-modal-trigger about-team-showcase-hitarea"
+                                    type="button"
+                                    data-team-modal-trigger
+                                    data-team-image-src="{{ url_for('static', filename=item.image_path) }}"
+                                    data-team-image-alt="{{ item.alt }}"
+                                    data-team-image-title="{{ item.headline }}"
+                                    data-team-image-caption="{{ item.body }}"
+                                    aria-label="Open team showcase image {{ loop.index }}"
+                                ></button>
+                                <div class="story-showcase-image-wash"></div>
+                                <div class="story-showcase-overlay">
+                                    <span class="story-showcase-overlay-step">{{ item.step_label }}</span>
+                                    <h3 class="story-showcase-overlay-title">{{ item.headline }}</h3>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    <div class="story-showcase-footer about-team-showcase-footer">
+                        <div class="story-showcase-progress" role="tablist" aria-label="EcoBridge Ghana team slides">
+                            {% for item in about_team.slides %}
+                                <button
+                                    class="story-showcase-dot"
+                                    type="button"
+                                    data-showcase-dot
+                                    data-slide-index="{{ loop.index0 }}"
+                                    aria-label="Show team slide {{ loop.index }}"
+                                    aria-pressed="{{ 'true' if loop.first else 'false' }}"
+                                >
+                                    <span class="story-showcase-dot-bar"></span>
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <div class="story-showcase-controls">
+                            <button class="story-showcase-control" type="button" data-showcase-prev aria-label="Previous team slide">
+                                <span aria-hidden="true">&larr;</span>
+                            </button>
+                            <button class="story-showcase-control" type="button" data-showcase-next aria-label="Next team slide">
+                                <span aria-hidden="true">&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="team-image-modal" data-team-image-modal hidden>
+    <div class="team-image-modal-backdrop" data-team-modal-close></div>
+    <div
+        class="team-image-modal-dialog content-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="team-image-modal-title"
+        aria-describedby="team-image-modal-caption"
+    >
+        <button class="team-image-modal-close" type="button" data-team-modal-close aria-label="Close image popup">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="team-image-modal-media-shell">
+            <img src="" alt="" class="team-image-modal-image" data-team-modal-image>
+        </div>
+        <div class="team-image-modal-copy">
+            <span class="team-image-modal-kicker">EcoBridge Ghana team</span>
+            <h3 id="team-image-modal-title" class="team-image-modal-title" data-team-modal-title></h3>
+            <p id="team-image-modal-caption" class="team-image-modal-caption mb-0" data-team-modal-caption></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

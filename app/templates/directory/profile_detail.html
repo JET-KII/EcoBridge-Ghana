@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pb-5 pt-5">
+    <div class="container">
+        <div class="profile-hero">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-8">
+                    <div class="profile-identity">
+                        <div class="profile-media profile-media-xl">
+                            {% if profile.image_url %}
+                                <img src="{{ url_for('static', filename=profile.image_url) }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
+                            {% else %}
+                                <span class="profile-media-placeholder">{{ profile.initials }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="profile-identity-copy">
+                            {% if can_preview_private and not profile.is_public %}
+                                <span class="badge text-bg-warning rounded-pill px-3 py-2">Private preview: {{ profile.status_label }}</span>
+                            {% else %}
+                                <span class="pill pill-soft">{{ profile.public_role_label }}</span>
+                            {% endif %}
+                            <h1 class="section-title mt-3">{{ profile.display_name }}</h1>
+                            <p class="section-copy mb-2">{{ profile.location_label }}</p>
+                            <div class="tag-row mt-3">
+                                {% for waste in profile.waste_types %}
+                                    <span class="tag">{{ waste.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="content-panel h-100">
+                        <h2>Direct contact</h2>
+                        <ul class="contact-list mt-3">
+                            <li><strong>Phone:</strong> <a href="tel:{{ profile.user.phone }}">{{ profile.user.phone }}</a></li>
+                            <li><strong>Email:</strong> <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a></li>
+                            <li><strong>WhatsApp:</strong> <a href="{{ profile.whatsapp_url }}" target="_blank" rel="noreferrer">Message now</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <div class="col-lg-8">
+                <div class="content-panel">
+                    <h2>Profile overview</h2>
+                    <p class="mb-0">{{ profile.description }}</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="content-panel accent-panel h-100">
+                    <h2>At a glance</h2>
+                    <ul class="contact-list mt-3">
+                        <li><strong>Member type:</strong> {{ profile.public_role_label }}</li>
+                        <li><strong>Coverage:</strong> {{ profile.location_label }}</li>
+                        <li><strong>Waste types:</strong> {{ profile.waste_type_names }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="empty-state compact-state">
+            <span class="eyebrow">Message received</span>
+            <h1 class="section-title mt-3">Thanks for reaching out.</h1>
+            {% if email_sent %}
+                <p>We have sent your message to {{ recipient_email }}, and the EcoBridge Ghana team will review it shortly.</p>
+            {% else %}
+                <p>We have stored your message and the EcoBridge Ghana team will review it shortly.</p>
+            {% endif %}
+            <a href="{{ url_for('main.home') }}" class="btn btn-brand mt-3">Back to homepage</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

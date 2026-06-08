@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Join The Network</span>
+        <h1 class="section-title mt-3">Register as a collector or recycling agency.</h1>
+        <p class="section-copy">Create your profile, go live right away, and start getting discovered by the right recovery partners.</p>
+    </div>
+</section>
+
+<section class="pb-5 auth-stage register-stage">
+    <div class="container">
+        <div class="row g-4 align-items-start auth-stage-shell">
+            <div class="col-lg-4">
+                <aside class="content-panel register-guide-panel h-100">
+                    <span class="panel-kicker">Registration guide</span>
+                    <h2 class="mt-3">How to register successfully.</h2>
+                    <p class="register-guide-copy">Use this quick guide to complete your EcoBridge Ghana profile correctly the first time.</p>
+                    <ol class="register-guide-list" aria-label="Registration steps">
+                        <li class="register-guide-step">
+                            <span class="register-guide-number">01</span>
+                            <div>
+                                <h3>Choose your registration type</h3>
+                                <p>Select whether you are registering as a collector or a recycling agency.</p>
+                            </div>
+                        </li>
+                        <li class="register-guide-step">
+                            <span class="register-guide-number">02</span>
+                            <div>
+                                <h3>Enter working contact details</h3>
+                                <p>Use the phone number and email address partners should use to reach you directly.</p>
+                            </div>
+                        </li>
+                        <li class="register-guide-step">
+                            <span class="register-guide-number">03</span>
+                            <div>
+                                <h3>Add your service location</h3>
+                                <p>Fill in your region, city, and area so people can find you by location in the directory.</p>
+                            </div>
+                        </li>
+                        <li class="register-guide-step">
+                            <span class="register-guide-number">04</span>
+                            <div>
+                                <h3>Select waste types and describe your work</h3>
+                                <p>Choose all waste streams you handle and write a short summary of your service or recycling focus.</p>
+                            </div>
+                        </li>
+                        <li class="register-guide-step">
+                            <span class="register-guide-number">05</span>
+                            <div>
+                                <h3>Create the account and check your email</h3>
+                                <p>After submitting the form, your profile goes live immediately and a confirmation email is sent to you.</p>
+                            </div>
+                        </li>
+                    </ol>
+                    <div class="register-guide-note">
+                        <strong>Helpful tip</strong>
+                        <p>A logo or profile photo is optional, but it helps your listing look more trusted and easier to recognize.</p>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-panel register-form-panel">
+                    <span class="panel-kicker panel-kicker-dark">Registration details</span>
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.display_name.label.text }}</label>
+                                {{ form.display_name(class="form-control", placeholder="Company or full name") }}
+                                {% for error in form.display_name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.role.label.text }}</label>
+                                {{ form.role(class="form-select") }}
+                                {% for error in form.role.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.phone.label.text }}</label>
+                                {{ form.phone(class="form-control", placeholder="+233...") }}
+                                {% for error in form.phone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.email.label.text }}</label>
+                                {{ form.email(class="form-control", placeholder="you@example.com") }}
+                                {% for error in form.email.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.password.label.text }}</label>
+                                <div class="password-field">
+                                    {{ form.password(class="form-control password-input", data_password_toggle_target="register-password") }}
+                                    <button class="password-toggle" type="button" data-password-toggle="register-password" data-password-visible="false" aria-label="Show password" aria-pressed="false">
+                                        <span class="password-toggle-icon password-toggle-icon-eye" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" focusable="false">
+                                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </span>
+                                        <span class="password-toggle-icon password-toggle-icon-eye-off" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" focusable="false">
+                                                <path d="M3 3l18 18"></path>
+                                                <path d="M10.6 10.7A3 3 0 0 0 9 12a3 3 0 0 0 4.3 2.7"></path>
+                                                <path d="M9.9 5.1A11.3 11.3 0 0 1 12 5c6.5 0 10 7 10 7a17.5 17.5 0 0 1-3.2 4.2"></path>
+                                                <path d="M6.6 6.7C4 8.1 2 12 2 12a17.8 17.8 0 0 0 7.5 5.4"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="visually-hidden password-toggle-label">Show password</span>
+                                    </button>
+                                </div>
+                                {% for error in form.password.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.confirm_password.label.text }}</label>
+                                <div class="password-field">
+                                    {{ form.confirm_password(class="form-control password-input", data_password_toggle_target="register-confirm-password") }}
+                                    <button class="password-toggle" type="button" data-password-toggle="register-confirm-password" data-password-visible="false" aria-label="Show password" aria-pressed="false">
+                                        <span class="password-toggle-icon password-toggle-icon-eye" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" focusable="false">
+                                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                        </span>
+                                        <span class="password-toggle-icon password-toggle-icon-eye-off" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" focusable="false">
+                                                <path d="M3 3l18 18"></path>
+                                                <path d="M10.6 10.7A3 3 0 0 0 9 12a3 3 0 0 0 4.3 2.7"></path>
+                                                <path d="M9.9 5.1A11.3 11.3 0 0 1 12 5c6.5 0 10 7 10 7a17.5 17.5 0 0 1-3.2 4.2"></path>
+                                                <path d="M6.6 6.7C4 8.1 2 12 2 12a17.8 17.8 0 0 0 7.5 5.4"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="visually-hidden password-toggle-label">Show password</span>
+                                    </button>
+                                </div>
+                                {% for error in form.confirm_password.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.region.label.text }}</label>
+                                {{ form.region(class="form-control", placeholder="Greater Accra") }}
+                                {% for error in form.region.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.city.label.text }}</label>
+                                {{ form.city(class="form-control", placeholder="Accra") }}
+                                {% for error in form.city.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.area.label.text }}</label>
+                                {{ form.area(class="form-control", placeholder="Dansoman") }}
+                                {% for error in form.area.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.waste_types.label.text }}</label>
+                                {{ form.waste_types(class="form-select", size="6", multiple=true) }}
+                                <div class="form-text">Hold Ctrl or Command to select multiple waste streams.</div>
+                                {% for error in form.waste_types.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.description.label.text }}</label>
+                                {{ form.description(class="form-control", rows="5", placeholder="Describe your service area, collection capacity, or recycling focus.") }}
+                                {% for error in form.description.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.image.label.text }}</label>
+                                {{ form.image(class="form-control") }}
+                                <div class="form-text">If you upload a logo or photo, it will appear on your directory card and profile page as soon as your account is created.</div>
+                                {% for error in form.image.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                {{ form.submit(class="btn btn-brand") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

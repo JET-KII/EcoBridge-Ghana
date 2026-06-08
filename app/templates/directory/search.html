@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Search Directory</span>
+        <h1 class="section-title mt-3">Find collectors and recycling agencies.</h1>
+        <p class="section-copy">Filter by location, member type, and waste stream to discover the right recovery partner.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="search-panel search-panel-premium">
+            <div class="search-panel-head">
+                <div>
+                    <span class="panel-kicker panel-kicker-dark">Directory filters</span>
+                    <h2>Find the right recovery partner</h2>
+                </div>
+                <p>Search by location, member type, and waste stream with cleaner verified profile cards below.</p>
+            </div>
+            <form method="get">
+                <div class="row g-3 align-items-end">
+                    <div class="col-lg-5">
+                        <label class="form-label">{{ form.location.label.text }}</label>
+                        {{ form.location(class="form-control", placeholder="Accra, Tema, Kumasi...") }}
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">{{ form.user_type.label.text }}</label>
+                        {{ form.user_type(class="form-select") }}
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">{{ form.waste_type.label.text }}</label>
+                        {{ form.waste_type(class="form-select") }}
+                    </div>
+                    <div class="col-lg-1">
+                        {{ form.submit(class="btn btn-brand w-100") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row g-4 mt-1">
+            {% for profile in profiles %}
+                <div class="col-lg-4">
+                    <article class="listing-card listing-card-premium h-100">
+                        <div class="listing-card-topline">
+                            <span class="pill pill-soft">{{ profile.public_role_label }}</span>
+                            <span class="status-chip status-chip-live">{{ profile.status_label }}</span>
+                        </div>
+                        <div class="listing-identity mt-4">
+                            <div class="profile-media profile-media-md profile-media-premium listing-media">
+                                {% if profile.image_url %}
+                                    <img src="{{ url_for('static', filename=profile.image_url) }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
+                                {% else %}
+                                    <span class="profile-media-placeholder">{{ profile.initials }}</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h2 class="h4">{{ profile.display_name }}</h2>
+                                <p class="listing-location mt-2 mb-0">{{ profile.location_label }}</p>
+                            </div>
+                        </div>
+                        <p class="listing-summary mt-4">{{ profile.description[:150] }}{% if profile.description|length > 150 %}...{% endif %}</p>
+                        <div class="tag-row mt-4">
+                            {% for waste in profile.waste_types %}
+                                <span class="tag">{{ waste.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a class="btn btn-outline-dark" href="{{ url_for('directory.detail', profile_id=profile.id) }}">View Profile</a>
+                            <a class="btn btn-outline-success" href="{{ profile.whatsapp_url }}" target="_blank" rel="noreferrer">WhatsApp</a>
+                        </div>
+                    </article>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <h2>No results found</h2>
+                        <p>Try a broader location or remove one of the filters to see more listings.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

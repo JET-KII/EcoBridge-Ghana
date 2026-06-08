@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-section hero-section-launch">
+    <div class="container hero-section-inner py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="hero-copy-stack hero-copy-stack-launch">
+                    <span class="eyebrow">{{ home_campaign.eyebrow }}</span>
+                    <p class="hero-kicker mt-4">{{ home_campaign.launch_label }}</p>
+                    <h1 class="display-title mt-3">EcoBridge Ghana</h1>
+                    <p class="hero-launch-support mt-3">{{ home_campaign.support_line }}</p>
+                    <h2 class="hero-launch-title mt-4">{{ home_campaign.headline }}</h2>
+                    <p class="hero-copy mt-4">{{ home_campaign.body }}</p>
+                </div>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-brand btn-lg">Join Network</a>
+                    <a href="{{ url_for('directory.search') }}" class="btn btn-outline-light btn-lg">Search Directory</a>
+                </div>
+                <div class="hero-trust-row mt-4">
+                    {% for item in home_campaign.trust_cues %}
+                        <span class="hero-trust-pill">{{ item }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-launch-stage">
+                    <div class="hero-launch-curve hero-launch-curve-a"></div>
+                    <div class="hero-launch-curve hero-launch-curve-b"></div>
+                    <article class="hero-launch-card hero-launch-card-feature">
+                        <div class="hero-launch-card-topline">
+                            <span class="hero-card-label">{{ home_campaign.launch_label }}</span>
+                            <span class="hero-launch-tag">{{ site_marketing_tagline }}</span>
+                        </div>
+                        <div class="hero-launch-photo-grid">
+                            {% for item in home_campaign.hero_media %}
+                                <figure class="hero-photo-card hero-photo-card-{{ loop.index }}">
+                                    <img src="{{ url_for('static', filename=item.image_path) }}" alt="{{ item.alt }}" class="hero-photo-image">
+                                    <figcaption class="hero-photo-label">{{ item.label }}</figcaption>
+                                </figure>
+                            {% endfor %}
+                        </div>
+                    </article>
+                    <div class="hero-launch-row">
+                        <article class="hero-launch-card hero-launch-card-copy">
+                            <span class="hero-card-label">Launch focus</span>
+                            <h2>{{ site_marketing_tagline }}</h2>
+                            <p>{{ site_footer_support_line }}</p>
+                        </article>
+                        <article class="hero-launch-card hero-launch-card-stats">
+                            <span class="hero-card-label">Verified network</span>
+                            <div class="hero-visual-number">{{ public_profiles }}</div>
+                            <p class="hero-visual-copy">Public listings ready for direct discovery and cleaner recovery partnerships.</p>
+                            <div class="hero-stat-row">
+                                <div class="hero-stat-chip">
+                                    <strong>{{ collector_count }}</strong>
+                                    <span>Collectors</span>
+                                </div>
+                                <div class="hero-stat-chip">
+                                    <strong>{{ agency_count }}</strong>
+                                    <span>Agencies</span>
+                                </div>
+                                <div class="hero-stat-chip">
+                                    <strong>{{ waste_type_count }}</strong>
+                                    <span>Streams</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="story-showcase-section story-showcase-section-launch py-5" data-showcase-root>
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="story-showcase-copy">
+                    <span class="eyebrow eyebrow-tint">Launch story</span>
+                    <h2 class="section-title mt-3">{{ home_campaign.story_heading }}</h2>
+                    <p class="section-copy mt-3 mb-0">{{ home_campaign.story_copy }}</p>
+
+                    <div class="story-showcase-detail-panel mt-4" aria-live="polite">
+                        <span class="story-showcase-step" data-showcase-story-step>{{ home_showcase_items[0].step_label }}</span>
+                        <h3 class="story-showcase-detail-title mt-3" data-showcase-story-headline>{{ home_showcase_items[0].headline }}</h3>
+                        <p class="story-showcase-detail-copy mt-3 mb-0" data-showcase-story-body>{{ home_showcase_items[0].body }}</p>
+                    </div>
+
+                    <div class="story-showcase-highlights mt-4">
+                        {% for highlight in home_campaign.story_highlights %}
+                            <span class="story-showcase-highlight">{{ highlight }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <a href="{{ url_for('directory.search') }}" class="btn btn-brand btn-lg mt-4">Search Directory</a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="story-showcase-shell" data-showcase-slider data-autoplay="5000" data-showcase-entered="false">
+                    <div class="story-showcase-stage" tabindex="0" aria-label="EcoBridge Ghana recovery story showcase">
+                        {% for item in home_showcase_items %}
+                            <article
+                                class="story-showcase-slide"
+                                data-showcase-slide
+                                data-step-label="{{ item.step_label }}"
+                                data-headline="{{ item.headline }}"
+                                data-body="{{ item.body }}"
+                                style="--slide-order: {{ loop.index0 }};"
+                                aria-hidden="{{ 'false' if loop.first else 'true' }}"
+                            >
+                                <img src="{{ url_for('static', filename=item.image_path) }}" alt="{{ item.alt }}" class="story-showcase-image">
+                                <div class="story-showcase-image-wash"></div>
+                                <div class="story-showcase-overlay">
+                                    <span class="story-showcase-overlay-step">{{ item.step_label }}</span>
+                                    <h3 class="story-showcase-overlay-title">{{ item.headline }}</h3>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    <div class="story-showcase-footer">
+                        <div class="story-showcase-progress" role="tablist" aria-label="Recovery story slides">
+                            {% for item in home_showcase_items %}
+                                <button
+                                    class="story-showcase-dot"
+                                    type="button"
+                                    data-showcase-dot
+                                    data-slide-index="{{ loop.index0 }}"
+                                    aria-label="Show slide {{ loop.index }}"
+                                    aria-pressed="{{ 'true' if loop.first else 'false' }}"
+                                >
+                                    <span class="story-showcase-dot-bar"></span>
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <div class="story-showcase-controls">
+                            <button class="story-showcase-control" type="button" data-showcase-prev aria-label="Previous story slide">
+                                <span aria-hidden="true">&larr;</span>
+                            </button>
+                            <button class="story-showcase-control" type="button" data-showcase-next aria-label="Next story slide">
+                                <span aria-hidden="true">&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="proof-section">
+    <div class="container">
+        <div class="proof-strip">
+            <article class="proof-card">
+                <span class="proof-number">{{ public_profiles }}</span>
+                <h2>Live listings</h2>
+                <p>Public profiles go live right after registration unless a listing is suspended.</p>
+            </article>
+            <article class="proof-card">
+                <span class="proof-number">{{ waste_type_count }}</span>
+                <h2>Waste streams mapped</h2>
+                <p>Search by the materials each collector or recycler actually handles.</p>
+            </article>
+            <article class="proof-card">
+                <span class="proof-number">3</span>
+                <h2>Direct contact routes</h2>
+                <p>Members can be reached by phone, email, and WhatsApp as soon as they join.</p>
+            </article>
+            <article class="proof-card">
+                <span class="proof-number">1</span>
+                <h2>Ghana-focused network</h2>
+                <p>Built to support cleaner local recovery partnerships and circular growth.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 section-home-pillars">
+    <div class="container">
+        <div class="section-heading-row premium-heading-row">
+            <div>
+                <span class="eyebrow eyebrow-tint">Launch pillars</span>
+                <h2 class="section-title">Four ideas shaping the EcoBridge Ghana service launch.</h2>
+            </div>
+            <p class="section-copy section-copy-compact mb-0">{{ site_footer_support_line }}</p>
+        </div>
+        <div class="row g-4 mt-1">
+            {% for pillar in home_campaign.pillars %}
+                <div class="col-md-6 col-xl-3">
+                    <article class="launch-pillar-card h-100">
+                        <span class="launch-pillar-icon" aria-hidden="true">
+                            {% if pillar.icon == "partnership" %}
+                                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                                    <path d="M7.4 10.2a2.5 2.5 0 1 0-2.5-2.5 2.5 2.5 0 0 0 2.5 2.5Zm9.2 0a2.5 2.5 0 1 0-2.5-2.5 2.5 2.5 0 0 0 2.5 2.5ZM12 11.6A3.1 3.1 0 1 0 8.9 8.5 3.1 3.1 0 0 0 12 11.6Zm0 1.8c-3.3 0-6.1 2-6.1 4.6V20h12.2v-2c0-2.6-2.8-4.6-6.1-4.6Zm-6.8-.2c-1.6 0-3 .9-3.8 2.1V18a1 1 0 0 0 1 1h2.3a5.2 5.2 0 0 1 1.4-5.2c-.3-.4-.6-.6-.9-.6Zm13.6 0c-.3 0-.6.2-.9.6a5.2 5.2 0 0 1 1.4 5.2h2.3a1 1 0 0 0 1-1v-2.7c-.8-1.2-2.2-2.1-3.8-2.1Z"/>
+                                </svg>
+                            {% elif pillar.icon == "circularity" %}
+                                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                                    <path d="m11.9 2.2 2.9 2.9-1.9.7 1.1 1.9a6.4 6.4 0 0 1 4.3 1.4l2.4-1-.1 4-3.8 1.2 1.8-1.8a4.7 4.7 0 0 0-3.2-1.6l-1.8 3.1 2.2 3.7 2.2-.5-2 3.5-3.4-1.9-2.2-3.8H10l-2.2 3.8 1.3 1.8H5.2l1.1-3.8 2.1.5 2.2-3.7-1.8-3.1a4.7 4.7 0 0 0-3.2 1.6l1.8 1.8-3.8-1.2-.1-4 2.4 1a6.4 6.4 0 0 1 4.3-1.4l1.1-1.9-1.9-.7 2.9-2.9Z"/>
+                                </svg>
+                            {% elif pillar.icon == "connection" %}
+                                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                                    <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h10A1.5 1.5 0 0 1 16 8.5V14h1.6l1.9 1.9V18h-.9a2.4 2.4 0 0 1-4.7 0H8.1a2.4 2.4 0 0 1-4.7 0H2.5v-1.5H3Zm2.7 9.1a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Zm10.7 0a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8ZM16 10v3h2.1l-1.3-1.3V10Z"/>
+                                </svg>
+                            {% else %}
+                                <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                                    <path d="M12 4.1c-2.5 3.5-5.8 6.6-5.8 10A5.8 5.8 0 0 0 12 19.9a5.8 5.8 0 0 0 5.8-5.8c0-3.4-3.3-6.5-5.8-10Zm0 13.6a3.8 3.8 0 0 1-3.8-3.8c0-2.2 1.9-4.7 3.8-7 1.9 2.3 3.8 4.8 3.8 7A3.8 3.8 0 0 1 12 17.7Zm-1.4-2.1c1.9-.1 3.4-1.2 4-3-.2 2.8-1.8 4.7-4 5.2-2.1-.5-3.7-2.4-4-5.2.6 1.8 2.1 2.9 4 3Zm-.1-1.7a2.5 2.5 0 0 1 1.5-2.3 2.5 2.5 0 0 1 1.5 2.3c0 .3 0 .6-.1.8a3.7 3.7 0 0 1-2.8 0 3.8 3.8 0 0 1-.1-.8Z"/>
+                                </svg>
+                            {% endif %}
+                        </span>
+                        <span class="launch-pillar-kicker">{{ "%02d"|format(loop.index) }}</span>
+                        <h3>{{ pillar.title }}</h3>
+                        <p>{{ pillar.body }}</p>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 surface-section process-section">
+    <div class="container">
+        <div class="section-heading-row premium-heading-row">
+            <div>
+                <span class="eyebrow text-success-emphasis">How it works</span>
+                <h2 class="section-title">A clearer path from waste source to recycling partner.</h2>
+            </div>
+            <p class="section-copy section-copy-compact mb-0">{{ home_campaign.process_copy }}</p>
+        </div>
+        <div class="row g-4 mt-1">
+            <div class="col-md-4">
+                <article class="process-step h-100">
+                    <span class="process-step-number">01</span>
+                    <h3>Join the network</h3>
+                    <p>Collectors and recycling agencies register with their service area, waste types, and contact details.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="process-step h-100">
+                    <span class="process-step-number">02</span>
+                    <h3>Go live immediately</h3>
+                    <p>Profiles become visible right after sign-up so partnerships can start without waiting for extra admin steps.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="process-step h-100">
+                    <span class="process-step-number">03</span>
+                    <h3>Partners connect directly</h3>
+                    <p>Members are discovered by location and waste stream, then contacted directly through phone, email, or WhatsApp.</p>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 featured-network-section">
+    <div class="container">
+        <div class="section-heading-row premium-heading-row">
+            <div>
+                <span class="eyebrow eyebrow-tint">Featured network</span>
+                <h2 class="section-title">Recently added members ready for discovery.</h2>
+                <p class="section-copy section-copy-compact mb-0">{{ home_campaign.featured_copy }}</p>
+            </div>
+            <a href="{{ url_for('directory.search') }}" class="btn btn-outline-success">Browse all listings</a>
+        </div>
+        <div class="row g-4 mt-1">
+            {% for profile in featured_profiles %}
+                <div class="col-lg-4">
+                    <article class="listing-card listing-card-premium h-100">
+                        <div class="listing-card-topline">
+                            <span class="pill pill-soft">{{ profile.public_role_label }}</span>
+                            <span class="status-chip status-chip-live">{{ profile.status_label }}</span>
+                        </div>
+                        <div class="listing-identity mt-4">
+                            <div class="profile-media profile-media-md profile-media-premium listing-media">
+                                {% if profile.image_url %}
+                                    <img src="{{ url_for('static', filename=profile.image_url) }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
+                                {% else %}
+                                    <span class="profile-media-placeholder">{{ profile.initials }}</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h3>{{ profile.display_name }}</h3>
+                                <p class="listing-location mt-2 mb-0">{{ profile.location_label }}</p>
+                            </div>
+                        </div>
+                        <p class="listing-summary mt-4">{{ profile.description[:140] }}{% if profile.description|length > 140 %}...{% endif %}</p>
+                        <div class="tag-row mt-4">
+                            {% for waste in profile.waste_types %}
+                                <span class="tag">{{ waste.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a class="btn btn-outline-dark" href="{{ url_for('directory.detail', profile_id=profile.id) }}">View Profile</a>
+                            <a class="btn btn-outline-success" href="{{ profile.whatsapp_url }}" target="_blank" rel="noreferrer">WhatsApp</a>
+                        </div>
+                    </article>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="empty-state">
+                        <h3>No public listings yet</h3>
+                        <p>Once collectors and agencies create their accounts, they will appear here automatically.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 section-home-cta-shell">
+    <div class="container">
+        <div class="cta-band">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="eyebrow">Service launch</span>
+                    <h2 class="section-title mt-3">{{ home_campaign.cta_heading }}</h2>
+                    <p class="cta-copy mt-3">{{ home_campaign.cta_copy }}</p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="cta-actions">
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg">Join Network</a>
+                        <a href="{{ url_for('directory.search') }}" class="btn btn-outline-light btn-lg">Search Directory</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

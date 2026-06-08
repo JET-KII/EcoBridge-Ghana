@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Contact Us</span>
+        <h1 class="section-title mt-3">Let's build cleaner recovery systems together.</h1>
+        <p class="section-copy">Send a message for partnership discussions, onboarding questions, or general enquiries.</p>
+    </div>
+</section>
+
+<section class="pb-5 contact-shell-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="form-panel contact-form-panel">
+                    <span class="panel-kicker panel-kicker-dark">Send a message</span>
+                    <form method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.full_name.label.text }}</label>
+                                {{ form.full_name(class="form-control", placeholder="Your full name") }}
+                                {% for error in form.full_name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.email.label.text }}</label>
+                                {{ form.email(class="form-control", placeholder="you@example.com") }}
+                                {% for error in form.email.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.phone.label.text }}</label>
+                                {{ form.phone(class="form-control", placeholder="+233...") }}
+                                {% for error in form.phone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.message.label.text }}</label>
+                                {{ form.message(class="form-control", rows="6", placeholder="Tell us how EcoBridge Ghana can help.") }}
+                                {% for error in form.message.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                {{ form.submit(class="btn btn-brand") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="content-panel contact-side-panel h-100">
+                    <span class="panel-kicker">Direct contact</span>
+                    <h2>Direct contact</h2>
+                    <p>We welcome enquiries from collectors, recycling agencies, municipalities, and sustainability partners ready to connect waste to worth.</p>
+                    <ul class="contact-list mt-4">
+                        <li><strong>Website:</strong> <a href="{{ site_url }}" target="_blank" rel="noreferrer">{{ site_domain }}</a></li>
+                        <li><strong>Email:</strong> <a href="mailto:{{ site_public_email }}">{{ site_public_email }}</a></li>
+                        <li><strong>Phone:</strong> <a href="tel:{{ site_phone_href }}">{{ site_phone_display }}</a></li>
+                        <li><strong>Response window:</strong> Within 1-2 working days</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page_title %}{{ page_title }} | {% endif %}{{ site_name }}</title>
+    <meta name="description" content="{{ meta_description or site_tagline }}">
+    <meta name="theme-color" content="#2f9f2a">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='branding/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='branding/favicon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='branding/favicon-192.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script>document.documentElement.classList.add("js-motion");</script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<div class="site-shell">
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="{{ url_for('main.home') }}">
+                <span class="brand-logo-badge">
+                    <img
+                        src="{{ url_for('static', filename='branding/ecobridge-symbol-transparent.png') }}"
+                        alt="EcoBridge Ghana logo"
+                        class="brand-logo-image"
+                    >
+                </span>
+                <span>
+                    <span class="brand-name">EcoBridge Ghana</span>
+                    <small class="brand-subtitle d-block">{{ site_marketing_tagline }}</small>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.services') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.education') }}">Education</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('directory.search') }}">Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.contact') }}">Contact</a></li>
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.is_admin %}
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.edit_profile') }}">My Profile</a></li>
+                        <li class="nav-item">
+                            <form action="{{ url_for('auth.logout') }}" method="post" class="d-inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-link nav-link p-0" type="submit">Logout</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-brand btn-brand-nav" href="{{ url_for('auth.register') }}">Join Network</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container pt-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-stack">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer mt-5">
+        <div class="container py-5">
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-5">
+                    <div class="footer-brand-lockup">
+                        <img
+                            src="{{ url_for('static', filename='branding/ecobridge-selected-logo-transparent.png') }}"
+                            alt="EcoBridge Ghana logo"
+                            class="footer-brand-image"
+                        >
+                        <div>
+                            <h2 class="footer-title">EcoBridge Ghana</h2>
+                            <p class="footer-tagline">{{ site_marketing_tagline }}</p>
+                            <p class="footer-copy">{{ site_footer_support_line }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="footer-heading">Explore</h3>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('directory.search') }}">Search Directory</a></li>
+                        <li><a href="{{ url_for('auth.register') }}">Join Network</a></li>
+                        <li><a href="{{ url_for('main.education') }}">Education</a></li>
+                        <li><a href="{{ url_for('main.services') }}">Services</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="footer-heading">Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="{{ site_url }}" target="_blank" rel="noreferrer">{{ site_domain }}</a></li>
+                        <li><a href="mailto:{{ site_public_email }}">{{ site_public_email }}</a></li>
+                        <li><a href="tel:{{ site_phone_href }}">{{ site_phone_display }}</a></li>
+                        <li><a href="{{ url_for('main.contact') }}">Send a message</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-social-strip mt-4">
+                <a class="footer-social-item" href="{{ site_url }}" target="_blank" rel="noreferrer" aria-label="EcoBridge Ghana website">
+                    <span class="footer-social-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm6.9 9h-3.1a15.4 15.4 0 0 0-1.2-5A8.1 8.1 0 0 1 18.9 11ZM12 4.1c.9 1 1.9 3.3 2.4 6.9H9.6C10.1 7.4 11.1 5.1 12 4.1ZM9.4 6A15.4 15.4 0 0 0 8.2 11H5.1A8.1 8.1 0 0 1 9.4 6ZM5.1 13h3.1a15.4 15.4 0 0 0 1.2 5A8.1 8.1 0 0 1 5.1 13Zm6.9 6.9c-.9-1-1.9-3.3-2.4-6.9h4.8c-.5 3.6-1.5 5.9-2.4 6.9Zm2.6-1.9a15.4 15.4 0 0 0 1.2-5h3.1a8.1 8.1 0 0 1-4.3 5Z"/>
+                        </svg>
+                    </span>
+                    <span>{{ site_domain }}</span>
+                </a>
+                <a class="footer-social-item" href="{{ site_instagram_url }}" target="_blank" rel="noreferrer" aria-label="EcoBridge Ghana on Instagram">
+                    <span class="footer-social-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+                            <path d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2a5.4 5.4 0 0 1-5.4 5.4H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Zm0 1.9A3.5 3.5 0 0 0 3.9 7.4v9.2a3.5 3.5 0 0 0 3.5 3.5h9.2a3.5 3.5 0 0 0 3.5-3.5V7.4a3.5 3.5 0 0 0-3.5-3.5Zm9.9 1.4a1.2 1.2 0 1 1-1.2 1.2 1.2 1.2 0 0 1 1.2-1.2ZM12 6.7A5.3 5.3 0 1 1 6.7 12 5.3 5.3 0 0 1 12 6.7Zm0 1.9A3.4 3.4 0 1 0 15.4 12 3.4 3.4 0 0 0 12 8.6Z"/>
+                        </svg>
+                    </span>
+                    <span>{{ site_social_handle }}</span>
+                </a>
+                <div class="footer-social-item" aria-label="EcoBridge Ghana campaign hashtag">
+                    <span class="footer-social-icon" aria-hidden="true">#</span>
+                    <span>{{ site_hashtag }}</span>
+                </div>
+            </div>
+            <div class="footer-bottom pt-4 mt-4">
+                <p class="mb-0">{{ site_copyright }}</p>
+                <div class="footer-bottom-links">
+                    <a href="{{ url_for('directory.search') }}">Explore Directory</a>
+                    <a href="{{ url_for('main.contact') }}">Contact EcoBridge</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/site.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

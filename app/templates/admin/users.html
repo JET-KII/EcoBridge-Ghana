@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Manage Listings</span>
+        <h1 class="section-title mt-3">Manage collectors and recycling agencies.</h1>
+        <p class="section-copy">Keep good members active, suspend problematic listings, and remove anything fraudulent.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="table-panel">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for member in members %}
+                        <tr>
+                            <td>
+                                <strong>{{ member.profile.display_name }}</strong>
+                                <div class="text-secondary small">{{ member.profile.waste_type_names }}</div>
+                            </td>
+                            <td>{{ member.profile.public_role_label }}</td>
+                            <td>{{ member.profile.location_label }}</td>
+                            <td><span class="status-chip">{{ member.profile.status_label }}</span></td>
+                            <td>
+                                <div>{{ member.phone }}</div>
+                                <div class="small"><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% if member.role.value == "collector" %}
+                                        <form method="post" action="{{ url_for('admin.update_user_role', user_id=member.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="role" value="agency">
+                                            <button class="btn btn-sm btn-outline-primary" type="submit">Make Agency</button>
+                                        </form>
+                                    {% elif member.role.value == "agency" %}
+                                        <form method="post" action="{{ url_for('admin.update_user_role', user_id=member.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="role" value="collector">
+                                            <button class="btn btn-sm btn-outline-primary" type="submit">Make Collector</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if member.profile.status.value == "suspended" %}
+                                        <form method="post" action="{{ url_for('admin.activate_user', user_id=member.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button class="btn btn-sm btn-success" type="submit">Activate</button>
+                                        </form>
+                                    {% else %}
+                                        <form method="post" action="{{ url_for('admin.suspend_user', user_id=member.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button class="btn btn-sm btn-outline-warning" type="submit">Suspend</button>
+                                        </form>
+                                    {% endif %}
+                                    <form method="post" action="{{ url_for('admin.delete_user', user_id=member.id) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">No members found.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Profile Management</span>
+        <h1 class="section-title mt-3">Update your public listing.</h1>
+        <p class="section-copy">Your directory visibility is currently <strong>{{ profile.status_label }}</strong>. Active profiles appear in the public directory right away.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="form-panel">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.display_name.label.text }}</label>
+                                {{ form.display_name(class="form-control") }}
+                                {% for error in form.display_name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.email.label.text }}</label>
+                                {{ form.email(class="form-control") }}
+                                {% for error in form.email.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.phone.label.text }}</label>
+                                {{ form.phone(class="form-control") }}
+                                {% for error in form.phone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.region.label.text }}</label>
+                                {{ form.region(class="form-control") }}
+                                {% for error in form.region.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">{{ form.city.label.text }}</label>
+                                {{ form.city(class="form-control") }}
+                                {% for error in form.city.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">{{ form.area.label.text }}</label>
+                                {{ form.area(class="form-control") }}
+                                {% for error in form.area.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            {% if current_user.is_admin %}
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.status.label.text }}</label>
+                                    {{ form.status(class="form-select") }}
+                                    <div class="form-text">Use suspension only when a listing should be hidden from the public directory.</div>
+                                    {% for error in form.status.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="col-12">
+                                <label class="form-label">{{ form.waste_types.label.text }}</label>
+                                {{ form.waste_types(class="form-select", size="6", multiple=true) }}
+                                {% for error in form.waste_types.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.description.label.text }}</label>
+                                {{ form.description(class="form-control", rows="5") }}
+                                {% for error in form.description.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">{{ form.image.label.text }}</label>
+                                {{ form.image(class="form-control") }}
+                                <div class="form-text">This image appears on directory cards and your public profile while your listing is active.</div>
+                                {% for error in form.image.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                            </div>
+                            <div class="col-12">
+                                {{ form.submit(class="btn btn-brand") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="content-panel h-100">
+                    <div class="profile-media profile-media-lg mx-auto">
+                        {% if profile.image_url %}
+                            <img src="{{ url_for('static', filename=profile.image_url) }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
+                        {% else %}
+                            <span class="profile-media-placeholder">{{ profile.initials }}</span>
+                        {% endif %}
+                    </div>
+                    <h2>Public preview</h2>
+                    <p class="text-secondary">{{ profile.public_role_label }}</p>
+                    <p class="mb-1"><strong>Location:</strong> {{ profile.location_label }}</p>
+                    <p class="mb-1"><strong>Phone:</strong> {{ current_user.phone }}</p>
+                    <p class="mb-1"><strong>Email:</strong> {{ current_user.email }}</p>
+                    <p class="mt-3">{{ profile.description }}</p>
+                    <div class="tag-row mt-3">
+                        {% for waste in profile.waste_types %}
+                            <span class="tag">{{ waste.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

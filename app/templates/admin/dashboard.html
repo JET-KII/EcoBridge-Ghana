@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <span class="eyebrow">Admin Dashboard</span>
+        <h1 class="section-title mt-3">Manage listings and keep the network healthy.</h1>
+        <p class="section-copy">Use the admin tools below to manage members, respond to messages, and monitor basic platform activity.</p>
+    </div>
+</section>
+
+<section class="pb-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <span>Total members</span>
+                    <strong>{{ total_members }}</strong>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <span>Active</span>
+                    <strong>{{ active_profiles }}</strong>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="stat-card">
+                    <span>Suspended</span>
+                    <strong>{{ suspended_profiles }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+            <div class="col-lg-7">
+                <div class="content-panel h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">Quick actions</h2>
+                        <a href="{{ url_for('admin.users') }}" class="btn btn-outline-dark">Manage users</a>
+                    </div>
+                    <p class="mt-3">Members go live immediately after registration, so admin control now focuses on keeping listings active, suspending problematic records, and removing fake entries when necessary.</p>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="content-panel accent-panel h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">Recent messages</h2>
+                        <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-success">View all</a>
+                    </div>
+                    <ul class="message-list mt-4">
+                        {% for message in recent_messages %}
+                            <li>
+                                <strong>{{ message.full_name }}</strong>
+                                <span>{{ message.email }}</span>
+                                <p>{{ message.message[:100] }}{% if message.message|length > 100 %}...{% endif %}</p>
+                            </li>
+                        {% else %}
+                            <li>No messages yet.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
