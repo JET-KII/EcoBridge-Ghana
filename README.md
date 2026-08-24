@@ -30,22 +30,27 @@ EcoBridge Ghana is a Flask web application that connects waste collectors and re
 
 ## Screenshots
 
-Add sanitized screenshots before publishing the repository publicly:
+All screenshots use generated demo records rather than production or client data.
 
-- `docs/screenshots/home.png` - homepage and launch messaging
-- `docs/screenshots/directory.png` - searchable directory and listing cards
-- `docs/screenshots/register.png` - registration form and registration guide
-- `docs/screenshots/profile.png` - public profile page using demo data
-- `docs/screenshots/admin-dashboard.png` - admin dashboard using demo data
-- `docs/screenshots/contact.png` - contact form page
+### Homepage
+
+![EcoBridge Ghana homepage](docs/screenshots/home.png)
+
+### Searchable directory
+
+![EcoBridge Ghana searchable directory with demo listings](docs/screenshots/directory.png)
+
+### Member registration
+
+![EcoBridge Ghana member registration](docs/screenshots/register.png)
 
 ## Installation
 
 Clone the repository and move into the project directory:
 
 ```bash
-git clone https://github.com/your-username/ecobridge-ghana.git
-cd ecobridge-ghana
+git clone https://github.com/JET-KII/EcoBridge-Ghana.git
+cd EcoBridge-Ghana
 ```
 
 Create and activate a virtual environment:
@@ -139,6 +144,6 @@ Only include real client/team images in a public repository if the client has ex
 
 This project is an MVP/demo web platform prepared for portfolio and public GitHub presentation. It is suitable for local review and demonstration, but production deployment still requires secure environment variables, a production database, HTTPS hosting, SMTP credentials, and client approval for any public media assets.
 
-## Suggested Repository Name
+## Repository
 
-`ecobridge-ghana`
+[View EcoBridge Ghana on GitHub](https://github.com/JET-KII/EcoBridge-Ghana)
