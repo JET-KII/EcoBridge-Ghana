@@ -1,13 +1,8 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/index"
-    }
-  ],
   "functions": {
-    "api/index.py": {
-      "maxDuration": 30
+    "index.py": {
+      "maxDuration": 30,
+      "excludeFiles": "{tests/**,docs/**,**/test_*.py}"
     }
   }
 }

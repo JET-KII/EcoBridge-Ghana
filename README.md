@@ -138,7 +138,7 @@ The tests use isolated application configuration and should not require producti
 
 ## Vercel Deployment
 
-The repository includes a Flask entry point in `api/index.py` and routing in `vercel.json`.
+The repository exposes its Flask application through the zero-configuration `index.py` entry point and keeps function limits in `vercel.json`.
 The Vercel deployment uses:
 
 - Neon Postgres through `DATABASE_URL`
