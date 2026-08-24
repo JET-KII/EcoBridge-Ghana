@@ -24,6 +24,19 @@ def save_uploaded_image(file_storage):
     filename = secure_filename(file_storage.filename)
     suffix = Path(filename).suffix.lower()
     unique_name = f"{uuid4().hex}{suffix}"
+
+    blob_token = current_app.config.get("BLOB_READ_WRITE_TOKEN")
+    if blob_token:
+        from vercel.blob import BlobClient
+
+        blob = BlobClient(token=blob_token).put(
+            f"profiles/{unique_name}",
+            file_storage.read(),
+            access="public",
+            content_type=file_storage.mimetype,
+        )
+        return blob.url
+
     upload_dir = Path(current_app.config["UPLOAD_FOLDER"])
     upload_dir.mkdir(parents=True, exist_ok=True)
     file_storage.save(upload_dir / unique_name)

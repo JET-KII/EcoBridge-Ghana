@@ -50,8 +50,8 @@
                         </div>
                         <div class="listing-identity mt-4">
                             <div class="profile-media profile-media-md profile-media-premium listing-media">
-                                {% if profile.image_url %}
-                                    <img src="{{ url_for('static', filename=profile.image_url) }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
+                                {% if profile.image_src %}
+                                    <img src="{{ profile.image_src }}" alt="{{ profile.display_name }} logo or profile image" class="profile-media-image">
                                 {% else %}
                                     <span class="profile-media-placeholder">{{ profile.initials }}</span>
                                 {% endif %}

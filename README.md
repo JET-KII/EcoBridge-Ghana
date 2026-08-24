@@ -23,7 +23,8 @@ EcoBridge Ghana is a Flask web application that connects waste collectors and re
 - Flask-SQLAlchemy
 - Flask-WTF
 - SQLite for local development
-- MySQL-compatible production configuration through `DATABASE_URL`
+- MySQL- and PostgreSQL-compatible production configuration through `DATABASE_URL`
+- Vercel Blob support for persistent profile images
 - Bootstrap 5
 - Custom CSS and JavaScript
 - pytest
@@ -83,6 +84,7 @@ Use example values only in public documentation. Put real values in your local `
 | `SECRET_KEY` | `replace-with-a-local-dev-secret` | Flask session/security key |
 | `DATABASE_URL` | `sqlite:///instance/ecobridge_dev.db` | Local database connection |
 | `UPLOAD_FOLDER` | `app/static/uploads` | Runtime upload directory |
+| `BLOB_READ_WRITE_TOKEN` | empty | Enables persistent Vercel Blob profile-image storage |
 | `MAX_CONTENT_LENGTH` | `4194304` | Upload size limit in bytes |
 | `MAIL_SERVER` | `smtp.example.com` | SMTP host |
 | `MAIL_PORT` | `465` | SMTP port |
@@ -133,6 +135,21 @@ pytest
 ```
 
 The tests use isolated application configuration and should not require production credentials.
+
+## Vercel Deployment
+
+The repository includes a Flask entry point in `api/index.py` and routing in `vercel.json`.
+The Vercel deployment uses:
+
+- Neon Postgres through `DATABASE_URL`
+- Public Vercel Blob storage through `BLOB_READ_WRITE_TOKEN`
+- Local uploads as a fallback outside Vercel
+
+Initialize a newly provisioned database with:
+
+```bash
+python scripts/init_database.py
+```
 
 ## Public Repository Safety
 

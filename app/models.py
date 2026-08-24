@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timezone
 
 from flask_login import UserMixin
+from flask import url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .extensions import db, login_manager
@@ -120,6 +121,14 @@ class Profile(TimestampMixin, db.Model):
         if not self.image_filename:
             return None
         return f"uploads/{self.image_filename}"
+
+    @property
+    def image_src(self):
+        if not self.image_filename:
+            return None
+        if self.image_filename.startswith(("https://", "http://")):
+            return self.image_filename
+        return url_for("static", filename=self.image_url)
 
     @property
     def initials(self):

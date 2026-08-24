@@ -69,5 +69,6 @@ requirements-cpanel.txt
 # IDE / OS
 .idea/
 .vscode/
+.vercel/
 .DS_Store
 Thumbs.db
