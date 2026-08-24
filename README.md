@@ -2,6 +2,8 @@
 
 EcoBridge Ghana is a Flask web application that connects waste collectors and recycling agencies through searchable public profiles, direct contact routes, and a lightweight admin dashboard. The project is presented as a portfolio-ready MVP for a digital recycling marketplace.
 
+**Live website:** https://ecobridge-ghana.vercel.app
+
 ## Key Features
 
 - Public pages for Home, About, Services, Education, Directory, and Contact
@@ -159,7 +161,7 @@ Only include real client/team images in a public repository if the client has ex
 
 ## Project Status
 
-This project is an MVP/demo web platform prepared for portfolio and public GitHub presentation. It is suitable for local review and demonstration, but production deployment still requires secure environment variables, a production database, HTTPS hosting, SMTP credentials, and client approval for any public media assets.
+This project is deployed on Vercel with Neon Postgres and Vercel Blob storage. Contact-email delivery remains suppressed until production SMTP credentials are configured.
 
 ## Repository
 
